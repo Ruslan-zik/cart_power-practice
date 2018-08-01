@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>out_stock</id>
+    <version>1.0</version>
+    <priority>4294967294</priority>
+    <position>0</position>
+    <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
+    <default_language>en</default_language>
+    <queries>
+        <item for="install">
+        	ALTER TABLE ?:users ADD `out_of_stock` char(1) NOT NULL DEFAULT 'N';
+        </item>        
+        <item for="uninstall">
+        	ALTER TABLE ?:users DROP `out_of_stock`;
+        </item>
+    </queries>
+</addon>

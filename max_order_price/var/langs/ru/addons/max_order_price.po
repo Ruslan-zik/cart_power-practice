@@ -1,0 +1,29 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+
+msgctxt "Addons::name::max_order_price"
+msgid "Maximum order amount"
+msgstr "Максимальная сумма заказа"
+
+msgctxt "Addons::description::max_order_price"
+msgid ""
+msgstr ""
+
+msgctxt "Languages::max_order_price"
+msgid "Maximum order amount"
+msgstr "Максимальная сумма заказа"
+
+msgctxt "Languages::error_add_max_order_price"
+msgid "You can not add a product to the shopping cart, because the amount of goods in the shopping cart will exceed your maximum order amount by [max_total]. At the moment, you can buy products worth [correct_total]"
+msgstr "Нельзя добавить товар в корзину, потому что сумма товаров в корзине, будет превышать вашу возможную максимальную сумму заказа равной [max_total]. На данный момент вы можете купить товаров на сумму равной [correct_total]"
+
+msgctxt "Languages::error_cart_max_order_price"
+msgid "You can not place an order, your maximum possible purchase amount is [max_total]. You need to change the purchase amount by [correct_total]"
+msgstr "Нельзя оформить заказ, ваша максимальная возможная сумма покупки равна [max_total]. Вам нужно уменьшить сумму покупки на [correct_total]"
+
+msgctxt "Languages::error_amount_max_order_price"
+msgid "Number of items [product] in the cart changed from [max_total] to [correct_total]"
+msgstr "Количество товара [product] изменено в корзине с [max_total] на [correct_total]"

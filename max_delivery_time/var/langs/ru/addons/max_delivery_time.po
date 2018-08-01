@@ -1,0 +1,33 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cs-cart-latest\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: cs-cart-latest\n"
+"X-Crowdin-Language: ru\n"
+"X-Crowdin-File: /release-4.7.3/addons/my_changes.po\n"
+"Last-Translator: cscart <translations@cs-cart.com>\n"
+"PO-Revision-Date: 2018-03-27 06:28-0400\n"
+
+msgctxt "Addons::name::max_delivery_time"
+msgid "Max delivery date"
+msgstr "Максимальное время доставки"
+
+msgctxt "Addons::description::max_delivery_time"
+msgid ""
+msgstr "Максимальное время доставки для товаров"
+
+msgctxt "Languages::max_delivery_time"
+msgid "Max delivery date"
+msgstr "Максимальное время доставки"
+
+msgctxt "Languages::max_delivery_time_desc"
+msgid "Max delivery date"
+msgstr "Максимальное время доставки в днях, без учета выходных дней"
+
+msgctxt "Languages::max_delivery_time.text_settings_info"
+msgid "Select the statuses that will be considered as 'Completed'"
+msgstr "Выберете статусы которые будут считаться как 'Завершен'"

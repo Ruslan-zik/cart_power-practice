@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<email_templates scheme="1.0">
+    <templates>
+        <item>
+            <code><![CDATA[letter_after_update]]></code>
+            <area><![CDATA[C]]></area>
+            <status><![CDATA[A]]></status>
+            <subject/>
+            <default_subject><![CDATA[{{ __("user_changed_data") }}]]></default_subject>
+            <template/>
+            <default_template><![CDATA[{{ snippet("header") }}
+<p><a href='{{ url }}'>{{ __("user_changed_data") }}</a></p>
+{% if mes_m %}
+<p><strong>{{ __("user_account_info") }}:</strong></p>
+   {% for value in mes_m %}
+       <p>{{ value }}</p>
+   {% endfor %}
+<br>
+{% endif %}
+{% if mes_s %}
+<p><strong>{{ __("billing_shipping_address") }}:</strong></p>
+   {% for value in mes_s %}
+       <p>{{ value }}</p>
+   {% endfor %}
+<br>
+{% endif %}
+{% if mes_b %}
+<p><strong>{{ __("billing_address") }}:</strong></p>
+   {% for value in mes_b %}
+       <p>{{ value }}</p>
+   {% endfor %}
+{% endif %}
+{{ snippet("footer") }}]]></default_template>
+            <params_schema/>
+            <params/>
+            <addon><![CDATA[letter_after_update]]></addon>
+        </item>
+    </templates>
+    <snippets/>
+</email_templates>

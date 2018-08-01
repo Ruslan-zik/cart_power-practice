@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>cp_documents</id>
+    <version>1.0</version>
+    <priority>4000</priority>
+    <position>0</position>
+    <status>disabled</status>
+    <supplier>Cart-Power</supplier>
+    <has_icon>Y</has_icon>
+    <supplier_link>https://cart-power.com</supplier_link>
+    <default_language>en</default_language>
+    <authors>
+        <author>
+            <name>Cart-Power</name>
+            <email>sales@cart-power.com</email>
+            <url>http://cart-power.com</url>
+        </author>
+    </authors>
+    <queries>
+        <item>
+            CREATE TABLE `?:cp_documents` (
+                `doc_id` mediumint(8) unsigned NOT NULL auto_increment,
+                `company_id` mediumint(8) unsigned NOT NULL default '0',
+                `doc_category_id` mediumint(8) NULL,
+                `type` char(1) NOT NULL default 'I',
+                `status` char(1) NOT NULL default 'A',
+                `create_date` date NOT NULL,
+                PRIMARY KEY  (`doc_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_documents_description` (
+                `doc_id` mediumint(8) unsigned NOT NULL,
+                `lang_code` char(2) NOT NULL default '',
+                `name` varchar(255) NOT NULL,
+                `text` text NULL,
+                UNIQUE KEY (`doc_id`,`lang_code`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_categories_docs` (
+                `doc_category_id` mediumint(8) unsigned NOT NULL auto_increment,
+                `company_id` mediumint(8) unsigned NOT NULL default '0',
+                `status` char(1) NOT NULL default 'A',
+                PRIMARY KEY  (`doc_category_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_categories_docs_description` (
+                `doc_category_id` mediumint(8) unsigned NOT NULL,
+                `lang_code` char(2) NOT NULL default '',
+                `category_name` varchar(255) NOT NULL,
+                UNIQUE KEY `doc_category_id` (`doc_category_id`,`lang_code`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_files_docs` (
+                `file_id` mediumint(8) unsigned NOT NULL auto_increment,
+                `doc_id` mediumint(8) unsigned NOT NULL,
+                `lang_code` char(2) NOT NULL default '',
+                `file_name` varchar(255) NOT NULL,
+                `path_file` varchar(255) NOT NULL,
+                PRIMARY KEY  (`file_id`),
+                UNIQUE KEY `file_id` (`file_id`,`doc_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_documents;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_documents_description;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_categories_docs;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_categories_docs_description;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_files_docs;</item>
+    </queries>
+    <functions>
+        <item for="uninstall">fn_uninstall_cp_documents</item>
+    </functions>
+</addon>
