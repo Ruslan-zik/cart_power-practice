@@ -1,1 +1,0 @@
-{style src="addons/max_delivery_time/styles.css"}
