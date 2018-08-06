@@ -24,7 +24,7 @@
                 `doc_category_id` mediumint(8) NULL,
                 `type` char(1) NOT NULL default 'I',
                 `status` char(1) NOT NULL default 'A',
-                `create_date` date NOT NULL,
+                `create_date` int(11) NOT NULL,
                 PRIMARY KEY  (`doc_id`)
             ) Engine=MyISAM DEFAULT CHARSET UTF8;
         </item>

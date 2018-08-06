@@ -1,0 +1,81 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_EN\n"
+
+msgctxt "Addons::name::cp_documents"
+msgid "Cart-Power: Documents"
+msgstr "Cart-Power: Documents"
+
+msgctxt "Addons::description::cp_documents"
+msgid "The module allows you to create various types of CS-Cart documents. Documents can be internal (for administrators) and shared - for all users. Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
+msgstr "The module allows you to create various types of CS-Cart documents. Documents can be internal (for administrators) and shared - for all users. Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
+
+msgctxt "Languages::cp_documents"
+msgid "Documents"
+msgstr "Documents"
+
+msgctxt "Languages::vendor_documents"
+msgid "Vendor documents"
+msgstr "Vendor documents"
+
+msgctxt "Languages::store_documents"
+msgid "Store documents"
+msgstr "Store documents"
+
+msgctxt "Languages::cp_documents_menu_description"
+msgid "Manage store documents"
+msgstr "Manage store documents"
+
+msgctxt "Languages::add_document"
+msgid "Add document"
+msgstr "Add document"
+
+msgctxt "Languages::add_document_category"
+msgid "Add document category"
+msgstr "Add document category"
+
+msgctxt "Languages::documents_categories"
+msgid "Documents categories"
+msgstr "Documents categories"
+
+msgctxt "Languages::new_document"
+msgid "New document"
+msgstr "New document"
+
+msgctxt "Languages::internal"
+msgid "Internal"
+msgstr "Internal"
+
+msgctxt "Languages::editing_document_category"
+msgid "Editing document category"
+msgstr "Editing document category"
+
+msgctxt "Languages::editing_document"
+msgid "Editing document"
+msgstr "Editing document"
+
+msgctxt "Languages::sort_by_name_asc"
+msgid "Sort by name: ASC"
+msgstr "Sort by name: ASC"
+
+msgctxt "Languages::sort_by_name_desc"
+msgid "Sort by name: DESC"
+msgstr "Sort by name: DESC"
+
+msgctxt "Languages::sort_by_category_desc"
+msgid "Sort by category: DESC"
+msgstr "Sort by category: DESC"
+
+msgctxt "Languages::sort_by_category_asc"
+msgid "Sort by category: ASC"
+msgstr "Sort by category: ASC"
+
+msgctxt "Languages::sort_by_create_date_asc"
+msgid "Sort by creation date: ASC"
+msgstr "Sort by creation date: ASC"
+
+msgctxt "Languages::sort_by_create_date_desc"
+msgid "Sort by creation date: DESC"
+msgstr "Sort by creation date: DESC"

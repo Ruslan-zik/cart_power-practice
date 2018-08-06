@@ -1,0 +1,22 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_EN\n"
+
+msgctxt "Addons::name::cp_delivery_date"
+msgid "Cart-Power: Delivery date"
+msgstr "Cart-Power: Delivery date"
+
+msgctxt "Addons::description::cp_delivery_date"
+msgid "Allows you to add the desired delivery date"
+msgstr "Allows you to add the desired delivery date"
+
+msgctxt "Languages::cp_delivery_date.cp_delivery_date"
+msgid "Delivery date"
+msgstr "Delivery date"
+
+msgctxt "Languages::cp_delivery_date.not_indicated"
+msgid "Not indicated"
+msgstr "Not indicated"
+

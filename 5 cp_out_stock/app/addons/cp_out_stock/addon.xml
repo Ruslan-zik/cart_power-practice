@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>cp_out_stock</id>
+    <version>1.0</version>
+    <supplier>Cart-Power</supplier>
+    <has_icon>Y</has_icon>
+    <supplier_link>http://cart-power.com</supplier_link>
+    <authors>
+        <author>
+            <name>Cart-Power</name>
+            <email>sales@cart-power.com</email>
+            <url>http://cart-power.com</url>
+        </author>
+    </authors>
+    <priority>4294967294</priority>
+    <position>0</position>
+    <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
+    <default_language>en</default_language>
+    <queries>
+        <item for="install">
+        	ALTER TABLE ?:users ADD `cp_out_stock` char(1) NOT NULL DEFAULT 'N';
+        </item>        
+        <item for="uninstall">
+        	ALTER TABLE ?:users DROP `cp_out_stock`;
+        </item>
+    </queries>
+</addon>

@@ -1,0 +1,22 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+
+msgctxt "Addons::name::cp_delivery_date"
+msgid "Cart-Power: Delivery date"
+msgstr "Cart-Power: Желаемая дата доставки"
+
+msgctxt "Addons::description::cp_delivery_date"
+msgid "Allows you to add the desired delivery date"
+msgstr "Возможность добавление желаемой даты доставки"
+
+msgctxt "Languages::cp_delivery_date.cp_delivery_date"
+msgid "Delivery date"
+msgstr "Желаемая дата доставки"
+
+msgctxt "Languages::cp_delivery_date.not_indicated"
+msgid "Not indicated"
+msgstr "Не указано"
+

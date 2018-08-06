@@ -1,0 +1,29 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_EN\n"
+
+msgctxt "Addons::name::cp_max_order_price"
+msgid "Cart-Power: Maximum order price"
+msgstr "Cart-Power: Maximum order price"
+
+msgctxt "Addons::description::cp_max_order_price"
+msgid "Allows you to limit the maximum price of customer orders"
+msgstr "Allows you to limit the maximum price of customer orders"
+
+msgctxt "Languages::cp_max_order_price"
+msgid "Maximum order price"
+msgstr "Maximum order price"
+
+msgctxt "Languages::error_add_cp_max_order_price"
+msgid "You can not add a product to the shopping cart, because the price of goods in the shopping cart will exceed your maximum order price by [max_total]. At the moment, you can buy products worth [correct_total]"
+msgstr "You can not add a product to the shopping cart, because the price of goods in the shopping cart will exceed your maximum order price by [max_total]. At the moment, you can buy products worth [correct_total]"
+
+msgctxt "Languages::error_cart_cp_max_order_price"
+msgid "You can not place an order, your maximum possible purchase price is [max_total]. You need to change the purchase price by [correct_total]"
+msgstr "You can not place an order, your maximum possible purchase price is [max_total]. You need to change the purchase price by [correct_total]"
+
+msgctxt "Languages::error_amount_cp_max_order_price"
+msgid "Amount of products [product] in the cart changed from [max_total] to [correct_total]"
+msgstr "Amount of products [product] in the cart changed from [max_total] to [correct_total]"

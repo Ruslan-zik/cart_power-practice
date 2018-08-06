@@ -22,7 +22,7 @@ function fn_update_cp_document($document_data, $description, $doc_id, $main_lang
             db_query("REPLACE INTO ?:cp_documents_description ?e", $description);
         }
     } else {
-        $document_data['create_date'] = date('Y-m-d');
+        $document_data['create_date'] = time();
 
         $description['doc_id'] = $doc_id = db_query("INSERT INTO ?:cp_documents ?e", $document_data);
 
@@ -102,14 +102,14 @@ function fn_get_cp_documents($params, $items_per_page = 0, $lang_code)
         $company_id = $params['company_id'];
     }
 
-    $default_params = [
+    $default_params = array(
         'page' => 1,
         'items_per_page' => $items_per_page
-    ];
+    );
 
     $params = array_merge($default_params, $params);
 
-    $fields = [
+    $fields = array(
         '?:cp_documents.doc_id',
         '?:cp_documents.doc_category_id',
         '?:cp_documents.type',
@@ -119,15 +119,15 @@ function fn_get_cp_documents($params, $items_per_page = 0, $lang_code)
         '?:cp_documents_description.name',
         '?:cp_documents_description.text',
         '?:cp_categories_docs_description.category_name'
-    ];
+    );
 
-    $sortings = [
+    $sortings = array(
         'name' => '?:cp_documents_description.name',
         'category' => '?:cp_categories_docs_description.category_name',
         'type' => '?:cp_documents.type',
         'create_date' => '?:cp_documents.create_date',
         'status' => '?:cp_documents.status'
-    ];
+    );
 
     $sorting = db_sort($params, $sortings, 'create_date', 'desc');
 
@@ -155,10 +155,16 @@ function fn_get_cp_documents($params, $items_per_page = 0, $lang_code)
         $condition .= db_quote(" AND ?:cp_documents.doc_id = ?i", $params['doc_id']);
     }
 
-    if (AREA == 'C' && Registry::get('user_info.user_type') != 'A') {
-        if (Registry::get('user_info.user_type') == 'V') {
-            $condition .= db_quote(" AND (?:cp_documents.type = 'G' OR ?:cp_documents.company_id = ?i)", Registry::get('user_info.company_id'));
-        } else {
+    if (AREA == 'C') {
+        if (
+            (fn_allowed_for('MULTIVENDOR') 
+                && Registry::get('user_info.user_type') == 'V')
+            || (fn_allowed_for('ULTIMATE')
+                && Registry::get('user_info.user_type') == 'A'
+                && Registry::get('user_info.company_id') != 0)
+        ) {
+            $condition .= db_quote(" AND (?:cp_documents.type = 'G' OR (?:cp_documents.company_id = ?i OR ?:cp_documents.company_id = 0))", Registry::get('user_info.company_id'));
+        } elseif (Registry::get('user_info.user_type') != 'A') {
             $condition .= " AND ?:cp_documents.type = 'G'";
         }
     }
@@ -177,12 +183,12 @@ function fn_get_cp_documents($params, $items_per_page = 0, $lang_code)
     }
 
     if (!empty($params['min_create_date'])) {
-        $min_create_date = date('Y-m-d', fn_parse_date($params['min_create_date']));
+        $min_create_date = fn_parse_date($params['min_create_date']);
         $condition .= db_quote(" AND ?:cp_documents.create_date >= ?s", $min_create_date);
     }
 
     if (!empty($params['max_create_date'])) {
-        $max_create_date = date('Y-m-d', fn_parse_date($params['max_create_date']));
+        $max_create_date = fn_parse_date($params['max_create_date']);
         $condition .= db_quote(" AND ?:cp_documents.create_date <= ?s", $max_create_date);
     }
 
@@ -201,7 +207,7 @@ function fn_get_cp_documents($params, $items_per_page = 0, $lang_code)
 
     $documents_data = db_get_array("SELECT " . implode(', ', $fields) . " FROM ?:cp_documents $join WHERE 1 $condition $group $sorting $limit");
 
-    return [$documents_data, $params];
+    return array($documents_data, $params);
 }
 
 function fn_get_cp_documents_files_info($doc_id, $lang_code)

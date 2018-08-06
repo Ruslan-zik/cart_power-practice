@@ -16,6 +16,14 @@ msgctxt "Languages::cp_documents"
 msgid "Documents"
 msgstr "Документы"
 
+msgctxt "Languages::vendor_documents"
+msgid "Vendor documents"
+msgstr "Документы продавца"
+
+msgctxt "Languages::store_documents"
+msgid "Store documents"
+msgstr "Докуметы магазина"
+
 msgctxt "Languages::cp_documents_menu_description"
 msgid "Manage store documents"
 msgstr "Создание и редактирование документов магазина"
@@ -25,7 +33,7 @@ msgid "Add document"
 msgstr "Добавить документ"
 
 msgctxt "Languages::add_document_category"
-msgid "Add a document category"
+msgid "Add document category"
 msgstr "Добавить категорию документа"
 
 msgctxt "Languages::documents_categories"
@@ -41,11 +49,11 @@ msgid "Internal"
 msgstr "Внутренний"
 
 msgctxt "Languages::editing_document_category"
-msgid "Editing a document category"
+msgid "Editing document category"
 msgstr "Редактирование категории документа"
 
 msgctxt "Languages::editing_document"
-msgid "Editing a document"
+msgid "Editing document"
 msgstr "Редактирование документа"
 
 msgctxt "Languages::sort_by_name_asc"

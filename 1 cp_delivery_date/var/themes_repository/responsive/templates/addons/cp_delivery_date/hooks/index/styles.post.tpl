@@ -1,0 +1,1 @@
+{style src="addons/cp_delivery_date/styles.less"}

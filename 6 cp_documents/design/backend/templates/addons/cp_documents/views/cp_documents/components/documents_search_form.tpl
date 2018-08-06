@@ -18,18 +18,7 @@
                         class="cm-object-selector"
                         multiple
                         name="categories[]"
-                        data-ca-placeholder={__("search")}
-                        data-ca-enable-images="true"
-                        data-ca-image-width="30"
-                        data-ca-image-height="30"
                         data-ca-enable-search="true"
-                        data-ca-page-size="10"
-                        {if $filter.feature_id}
-                        {if $filter.use_variant_picker}
-                        data-ca-load-via-ajax="true"
-                        {/if}
-                        data-ca-data-url="{"cp_documents.get_variants_list?feature_id=`$filter.feature_id`"|fn_url nofilter}"
-                        {/if}
                         data-ca-close-on-select="false">
                 {if $categories}
                     {foreach from=$categories item=category}

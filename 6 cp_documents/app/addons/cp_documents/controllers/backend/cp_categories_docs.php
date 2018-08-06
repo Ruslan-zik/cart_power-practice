@@ -1,16 +1,4 @@
 <?php
-/***************************************************************************
-*                                                                          *
-*   (c) 2004 Vladimir V. Kalynyak, Alexey V. Vinokurov, Ilya M. Shalnev    *
-*                                                                          *
-* This  is  commercial  software,  only  users  who have purchased a valid *
-* license  and  accept  to the terms of the  License Agreement can install *
-* and use this program.                                                    *
-*                                                                          *
-****************************************************************************
-* PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
-* "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
-****************************************************************************/
 
 use Tygh\Registry;
 
@@ -30,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($user_company_id != 0 && $user_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['doc_category_id'])) {
                 fn_company_access_denied_notification();
 
-                return [CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage'];
+                return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
             }
         }
     }
@@ -43,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         fn_delete_cp_category($_REQUEST['doc_category_id']);
     }
 
-    return [CONTROLLER_STATUS_OK, "cp_categories_docs.manage"];
+    return array(CONTROLLER_STATUS_OK, "cp_categories_docs.manage");
 }
 
 if ($mode == 'update') {
@@ -52,13 +40,13 @@ if ($mode == 'update') {
             Registry::get('runtime.company_id')
             && (fn_allowed_for('ULTIMATE')
                 || fn_allowed_for('MULTIVENDOR'))
-            && $user_company_id != 0
-            && $user_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['doc_category_id'])
-            && db_get_field('SELECT status FROM ?:cp_categories_docs WHERE doc_category_id = ?i', $_REQUEST['doc_category_id']) == 'D'
+            && ($user_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['doc_category_id'])
+                || ($user_company_id == 0
+                    && db_get_field('SELECT status FROM ?:cp_categories_docs WHERE doc_category_id = ?i', $_REQUEST['doc_category_id']) == 'D'))
         ) {
             fn_company_access_denied_notification();
 
-            return [CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage'];
+            return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
         }
 
         $category = fn_get_cp_categories_docs(DESCR_SL, $_REQUEST['doc_category_id']);
@@ -72,16 +60,16 @@ if ($mode == 'update') {
 }
 
 if ($mode == 'manage') {
-    $navigation_sections = [
-        'documents' => [
+    $navigation_sections = array(
+        'documents' => array(
             'title' => __('cp_documents'),
             'href' => fn_url('cp_documents.manage'),
-        ],
-        'categories' => [
+        ),
+        'categories' => array(
             'title' => __('documents_categories'),
             'href' => fn_url('cp_categories_docs.manage'),
-        ],
-    ];
+        ),
+    );
     Registry::set('navigation.dynamic.sections', $navigation_sections);
     Registry::set('navigation.dynamic.active_section', 'categories');
 

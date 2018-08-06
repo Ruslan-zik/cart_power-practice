@@ -1,0 +1,17 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_EN\n"
+
+msgctxt "Addons::name::cp_letter_after_update"
+msgid "Cart-Power: Letter after update"
+msgstr "Cart-Power: Letter after update"
+
+msgctxt "Addons::description::cp_letter_after_update"
+msgid "Sending of messages to the chief administrator after updating by the customer of the profile"
+msgstr "Sending of messages to the chief administrator after updating by the customer of the profile"
+
+msgctxt "Languages::customer_changed_data"
+msgid "Customer changed data"
+msgstr "Customer changed data"

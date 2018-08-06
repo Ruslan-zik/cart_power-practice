@@ -1,0 +1,25 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+
+msgctxt "Addons::name::cp_max_delivery_time"
+msgid "Cart-Power: Max delivery time"
+msgstr "Cart-Power: Максимальное время доставки"
+
+msgctxt "Addons::description::cp_max_delivery_time"
+msgid "Allows you to add the maximum delivery time for products"
+msgstr "Возможность добавления максимальной времени доставки для товаров"
+
+msgctxt "Languages::cp_max_delivery_time"
+msgid "Max delivery time"
+msgstr "Максимальное время доставки"
+
+msgctxt "Languages::cp_max_delivery_time_desc"
+msgid "Maximum delivery time in days, excluding weekend"
+msgstr "Максимальное время доставки в днях, без учета выходных дней"
+
+msgctxt "Languages::cp_max_delivery_time.text_settings_info"
+msgid "Select the statuses that will be considered as 'Completed'"
+msgstr "Выберете статусы которые будут считаться как 'Завершен'"

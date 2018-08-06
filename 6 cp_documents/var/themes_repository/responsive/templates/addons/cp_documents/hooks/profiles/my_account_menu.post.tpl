@@ -1,1 +1,1 @@
-<li class="ty-account-info__item ty-dropdown-box__item"><a class="ty-account-info__a" href="{"cp_documents.view"|fn_url}" rel="nofollow">{__("cp_documents")}</a></li>
+<li class="ty-account-info__item ty-dropdown-box__item"><a class="ty-account-info__a" href="{"cp_documents.view"|fn_url}" rel="nofollow">{__("store_documents")}</a></li>

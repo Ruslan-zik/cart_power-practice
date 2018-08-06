@@ -1,16 +1,4 @@
 <?php
-/***************************************************************************
-*                                                                          *
-*   (c) 2004 Vladimir V. Kalynyak, Alexey V. Vinokurov, Ilya M. Shalnev    *
-*                                                                          *
-* This  is  commercial  software,  only  users  who have purchased a valid *
-* license  and  accept  to the terms of the  License Agreement can install *
-* and use this program.                                                    *
-*                                                                          *
-****************************************************************************
-* PLEASE READ THE FULL TEXT  OF THE SOFTWARE  LICENSE   AGREEMENT  IN  THE *
-* "copyright.txt" FILE PROVIDED WITH THIS DISTRIBUTION PACKAGE.            *
-****************************************************************************/
 
 use Tygh\Registry;
 
@@ -35,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ) {
                     fn_company_access_denied_notification();
 
-                    return [CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage'];
+                    return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
                 }
             }
         }
@@ -44,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($user_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['document_data']['doc_category_id']) && $user_company_id != 0) {
                 fn_company_access_denied_notification();
 
-                return [CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage'];
+                return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
             }
         }
     }
@@ -69,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if (fn_check_path($path_file)) {
                         fn_set_notification('E', __('error'), __('error_file_already_exists', ['[file]' => $base_name]));
 
-                        return [CONTROLLER_STATUS_OK, $return_url];
+                        return array(CONTROLLER_STATUS_OK, $return_url);
                     }
 
                     if (fn_copy($file['path'], $path . $file['name'])) {
@@ -98,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($user_company_id != 0 && $user_company_id != fn_get_company_id('cp_documents', 'doc_id', $doc_id)) {
                         fn_company_access_denied_notification();
 
-                        return [CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage'];
+                        return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
                     }
                 }
 
@@ -126,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if (!fn_get_cp_documents_files_info($_REQUEST['doc_id'], DESCR_SL)) {
-            return [CONTROLLER_STATUS_OK, 'cp_documents.update&doc_id=' . $_REQUEST['doc_id']];
+            return array(CONTROLLER_STATUS_OK, 'cp_documents.update&doc_id=' . $_REQUEST['doc_id']);
         }
     }
 
@@ -139,13 +127,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             Registry::get('runtime.company_id')
             && (fn_allowed_for('ULTIMATE')
                 || fn_allowed_for('MULTIVENDOR'))
-            && $user_company_id != fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id'])
-            && $user_company_id != 0
-            && db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']) == 'D'
+            && ($user_company_id != fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id'])
+                || ($user_company_id == 0
+                    && db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']) == 'D'))
             ) {
             fn_company_access_denied_notification();
 
-            return [CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage'];
+            return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
         }
 
         $path = fn_get_files_dir_path('cp_documents');
@@ -160,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $return_url = 'cp_documents.manage';
     }
     
-    return [CONTROLLER_STATUS_OK, $return_url];
+    return array(CONTROLLER_STATUS_OK, $return_url);
 }
 
 if ($mode == 'update') {
@@ -169,13 +157,13 @@ if ($mode == 'update') {
             Registry::get('runtime.company_id')
             && (fn_allowed_for('ULTIMATE')
                 || fn_allowed_for('MULTIVENDOR'))
-            && $user_company_id != fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id'])
-            && $user_company_id != 0
-            && db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']) == 'D'
+            && ($user_company_id != fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id'])
+                || ($user_company_id == 0
+                    && db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']) == 'D'))
         ) {
             fn_company_access_denied_notification();
 
-            return [CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage'];
+            return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
         }
     }
 
@@ -192,16 +180,16 @@ if ($mode == 'update') {
 
 
 if ($mode == 'manage') {
-    $navigation_sections = [
-        'documents' => [
+    $navigation_sections = array(
+        'documents' => array(
             'title' => __('cp_documents'),
             'href' => fn_url('cp_documents.manage'),
-        ],
-        'categories' => [
+        ),
+        'categories' => array(
             'title' => __('documents_categories'),
             'href' => fn_url('cp_categories_docs.manage'),
-        ],
-    ];
+        ),
+    );
 
     list($documents, $search) = fn_get_cp_documents($_REQUEST, Registry::get('settings.Appearance.admin_elements_per_page'), DESCR_SL);
     $categories = fn_get_cp_categories_docs_for_search(DESCR_SL);

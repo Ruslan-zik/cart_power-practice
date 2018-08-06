@@ -1,0 +1,17 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+
+msgctxt "Addons::name::cp_out_stock"
+msgid "Cart-Power: Hide/Show products in stock"
+msgstr "Cart-Power: Скрыть/Показать товары на складе"
+
+msgctxt "Addons::description::cp_out_stock"
+msgid "Allow to for customers to choose whether to show or not, products that are not in stock"
+msgstr "Возможность для клиентов выбрать, показывать или нет, товары, которых нет на складе"
+
+msgctxt "Languages::out_of_stock"
+msgid "Show products that are not in stock"
+msgstr "Показывать товары, которых нет на складе"

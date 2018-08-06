@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>cp_delivery_date</id>
+    <version>1.0</version>
+    <priority>777</priority>
+    <position>0</position>
+    <supplier>Cart-Power</supplier>
+    <has_icon>Y</has_icon>
+    <supplier_link>http://cart-power.com</supplier_link>
+    <authors>
+        <author>
+            <name>Cart-Power</name>
+            <email>sales@cart-power.com</email>
+            <url>http://cart-power.com</url>
+        </author>
+    </authors>
+    <default_language>en</default_language>
+    <queries>
+        <item>ALTER TABLE ?:order_details ADD COLUMN `cp_delivery_date` INT(11)</item>
+        <item for="uninstall">ALTER TABLE ?:order_details DROP COLUMN `cp_delivery_date`</item>
+    </queries>
+    <functions>
+        <item for="install">fn_install_cp_delivery_date_column</item>
+        <item for="uninstall">fn_uninstall_cp_delivery_date_column</item>
+    </functions>
+</addon>
