@@ -145,7 +145,7 @@ function fn_get_cp_documents($params, $items_per_page = 0, $lang_code)
         if (fn_allowed_for('MULTIVENDOR') && AREA == 'C') {
             $condition .= db_quote(" AND ?:cp_documents.company_id = ?i", $company_id);
         } else {
-            $condition .= db_quote(" AND (?:cp_documents.company_id = ?i OR (?:cp_documents.company_id = 0 AND (?:cp_documents.status = 'A' OR ?:cp_documents.status = 'H')))", $company_id);
+            $condition .= db_quote(" AND (?:cp_documents.company_id = ?i OR (?:cp_documents.company_id = 0 AND ?:cp_documents.status != 'D'))", $company_id);
         }
     } elseif (fn_allowed_for('MULTIVENDOR') && AREA == 'C' && empty($params['doc_id'])) {
         $condition .= " AND ?:cp_documents.company_id = 0";
@@ -161,7 +161,7 @@ function fn_get_cp_documents($params, $items_per_page = 0, $lang_code)
                 && Registry::get('user_info.user_type') == 'V')
             || (fn_allowed_for('ULTIMATE')
                 && Registry::get('user_info.user_type') == 'A'
-                && Registry::get('user_info.company_id') != 0)
+                && Registry::get('user_info.company_id'))
         ) {
             $condition .= db_quote(" AND (?:cp_documents.type = 'G' OR (?:cp_documents.company_id = ?i OR ?:cp_documents.company_id = 0))", Registry::get('user_info.company_id'));
         } elseif (Registry::get('user_info.user_type') != 'A') {

@@ -6,20 +6,25 @@ if (!defined('BOOTSTRAP')) {
     die('Access denied');
 }
 
-$user_company_id = Registry::get('user_info.company_id');
+if (
+    Registry::get('runtime.company_id')
+    && (fn_allowed_for('ULTIMATE')
+        || fn_allowed_for('MULTIVENDOR'))
+) {
+    if (!empty($_REQUEST['doc_category_id'])) {
+        $cat_company_id = fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['doc_category_id']);
+        $cat_status = db_get_field('SELECT status FROM ?:cp_categories_docs WHERE doc_category_id = ?i', $_REQUEST['doc_category_id']);
+    }
+
+    $run_company_id = Registry::get('runtime.company_id');
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (
-        Registry::get('runtime.company_id')
-        && (fn_allowed_for('ULTIMATE')
-            || fn_allowed_for('MULTIVENDOR'))
-    ) {
-        if (!empty($_REQUEST['doc_category_id'])) {
-            if ($user_company_id != 0 && $user_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['doc_category_id'])) {
-                fn_company_access_denied_notification();
+    if (isset($cat_company_id)) {
+        if (!empty($run_company_id) && $run_company_id != $cat_company_id) {
+            fn_company_access_denied_notification();
 
-                return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
-            }
+            return array(CONTROLLER_STATUS_REDIRECT, 'cp_categories_docs.manage');
         }
     }
 
@@ -35,20 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 if ($mode == 'update') {
-    if (!empty($_REQUEST['doc_category_id'])) {
+    if (isset($cat_company_id) && !empty($run_company_id)) {
         if (
-            Registry::get('runtime.company_id')
-            && (fn_allowed_for('ULTIMATE')
-                || fn_allowed_for('MULTIVENDOR'))
-            && ($user_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['doc_category_id'])
-                || ($user_company_id == 0
-                    && db_get_field('SELECT status FROM ?:cp_categories_docs WHERE doc_category_id = ?i', $_REQUEST['doc_category_id']) == 'D'))
+            (!empty($cat_company_id)
+                && $run_company_id != $cat_company_id)
+            || (empty($cat_company_id) 
+                && $cat_status == 'D')
         ) {
             fn_company_access_denied_notification();
 
-            return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
+            return array(CONTROLLER_STATUS_REDIRECT, 'cp_categories_docs.manage');
         }
+    }
 
+    if (!empty($_REQUEST['doc_category_id'])) {
         $category = fn_get_cp_categories_docs(DESCR_SL, $_REQUEST['doc_category_id']);
 
         if (!empty($_REQUEST['in_popup'])) {

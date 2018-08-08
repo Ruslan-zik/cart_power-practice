@@ -6,30 +6,36 @@ if (!defined('BOOTSTRAP')) {
     die('Access denied');
 }
 
-$user_company_id = Registry::get('user_info.company_id');
+if (
+    Registry::get('runtime.company_id')
+    && (fn_allowed_for('ULTIMATE')
+        || fn_allowed_for('MULTIVENDOR'))
+) {
+    if (!empty($_REQUEST['doc_id'])) {
+        $doc_company_id = fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id']);
+        $doc_status = db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']);
+    }
+
+    $run_company_id = Registry::get('runtime.company_id');
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (
-        Registry::get('runtime.company_id')
-        && (fn_allowed_for('ULTIMATE')
-            || fn_allowed_for('MULTIVENDOR'))
-    ) {
-        if (!empty($_REQUEST['doc_id'])) {
-            if ($user_company_id != 0 && $user_company_id != fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id'])) {
-                if (
-                    $mode != 'getfile'
-                    || ($mode == 'getfile'
-                        && db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']) == 'D')
-                ) {
-                    fn_company_access_denied_notification();
+    if (isset($doc_company_id)) {
+        if (!empty($run_company_id) && $run_company_id != $doc_company_id) {
+            if (
+                $mode != 'getfile'
+                || ($mode == 'getfile'
+                    && empty($doc_company_id)
+                    && $doc_status == 'D')
+            ) {
+                fn_company_access_denied_notification();
 
-                    return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
-                }
+                return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
             }
         }
 
         if (!empty($_REQUEST['document_data']['doc_category_id'])) {
-            if ($user_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['document_data']['doc_category_id']) && $user_company_id != 0) {
+            if (!empty($run_company_id) && $run_company_id != fn_get_company_id('cp_categories_docs', 'doc_category_id', $_REQUEST['document_data']['doc_category_id'])) {
                 fn_company_access_denied_notification();
 
                 return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
@@ -78,16 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $doc_ids = (array) $_REQUEST['doc_ids'];
 
             foreach ($doc_ids as $doc_id) {
-                if (
-                    Registry::get('runtime.company_id')
-                    && (fn_allowed_for('ULTIMATE')
-                        || fn_allowed_for('MULTIVENDOR'))
-                ) {
-                    if ($user_company_id != 0 && $user_company_id != fn_get_company_id('cp_documents', 'doc_id', $doc_id)) {
-                        fn_company_access_denied_notification();
+                if (!empty($run_company_id) && $run_company_id != fn_get_company_id('cp_documents', 'doc_id', $doc_id)) {
+                    fn_company_access_denied_notification();
 
-                        return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
-                    }
+                    return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
                 }
 
                 fn_delete_cp_document($doc_id);
@@ -123,19 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         && !empty($_REQUEST['file'])
         && !empty($_REQUEST['doc_id'])
     ) {
-        if (
-            Registry::get('runtime.company_id')
-            && (fn_allowed_for('ULTIMATE')
-                || fn_allowed_for('MULTIVENDOR'))
-            && ($user_company_id != fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id'])
-                || ($user_company_id == 0
-                    && db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']) == 'D'))
-            ) {
-            fn_company_access_denied_notification();
-
-            return array(CONTROLLER_STATUS_REDIRECT, 'cp_documents.manage');
-        }
-
         $path = fn_get_files_dir_path('cp_documents');
         $path .= $_REQUEST['doc_id'] . '/' . DESCR_SL . '/';
 
@@ -152,14 +139,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 if ($mode == 'update') {
-    if (!empty($_REQUEST['doc_id'])) {
+    if (isset($doc_company_id) && !empty($run_company_id)) {
         if (
-            Registry::get('runtime.company_id')
-            && (fn_allowed_for('ULTIMATE')
-                || fn_allowed_for('MULTIVENDOR'))
-            && ($user_company_id != fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id'])
-                || ($user_company_id == 0
-                    && db_get_field('SELECT status FROM ?:cp_documents WHERE doc_id = ?i', $_REQUEST['doc_id']) == 'D'))
+            (!empty($doc_company_id)
+                && $run_company_id != $doc_company_id)
+            || (empty($doc_company_id) 
+                && $doc_status == 'D')
         ) {
             fn_company_access_denied_notification();
 
@@ -167,17 +152,18 @@ if ($mode == 'update') {
         }
     }
 
-    list($documents, ) = fn_get_cp_documents($_REQUEST, Registry::get('settings.Appearance.admin_elements_per_page'), DESCR_SL);
-    $files = fn_get_cp_documents_files_info($_REQUEST['doc_id'], DESCR_SL);
+    if (!empty($_REQUEST['doc_id'])) {
+        list($documents, ) = fn_get_cp_documents($_REQUEST, Registry::get('settings.Appearance.admin_elements_per_page'), DESCR_SL);
+        $files = fn_get_cp_documents_files_info($_REQUEST['doc_id'], DESCR_SL);
 
-    Registry::get('view')->assign('document', array_shift($documents));
-    Registry::get('view')->assign('files', $files);
+        Registry::get('view')->assign('document', array_shift($documents));
+        Registry::get('view')->assign('files', $files);
 
-    if (!empty($_REQUEST['in_popup'])) {
-        Registry::get('view')->assign('in_popup', 1);
+        if (!empty($_REQUEST['in_popup'])) {
+            Registry::get('view')->assign('in_popup', 1);
+        }
     }
 }
-
 
 if ($mode == 'manage') {
     $navigation_sections = array(

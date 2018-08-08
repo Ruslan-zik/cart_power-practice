@@ -9,7 +9,7 @@ if (!defined('BOOTSTRAP')) {
 if (fn_allowed_for('ULTIMATE') && !empty($_REQUEST['doc_id'])) {
     $doc_comp_id = fn_get_company_id('cp_documents', 'doc_id', $_REQUEST['doc_id']);
 
-    if ($doc_comp_id != Registry::get('runtime.company_id') && $doc_comp_id != 0) {
+    if ($doc_comp_id != Registry::get('runtime.company_id') && !empty($doc_comp_id)) {
         return array(CONTROLLER_STATUS_NO_PAGE);
     }
 }
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 && Registry::get('user_info.user_type') == 'V')
             || (fn_allowed_for('ULTIMATE')
                 && Registry::get('user_info.user_type') == 'A'
-                && Registry::get('user_info.company_id') != 0)
+                && Registry::get('user_info.company_id'))
             && !db_get_field("SELECT 1 FROM ?:cp_documents WHERE doc_id = ?i AND (type = 'G' OR (company_id = ?i OR company_id = 0))", $_REQUEST['doc_id'], Registry::get('user_info.company_id'))
         ) {
             return array(CONTROLLER_STATUS_NO_PAGE);
